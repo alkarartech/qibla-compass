@@ -15,6 +15,7 @@ describe('getCardinalFromBearing', () => {
   it('returns W for 270', () => expect(getCardinalFromBearing(270)).toBe('W'));
   it('returns NE for 45', () => expect(getCardinalFromBearing(45)).toBe('NE'));
   it('returns SW for 225', () => expect(getCardinalFromBearing(225)).toBe('SW'));
+  it('returns NNE for 24° (0–360, North clockwise)', () => expect(getCardinalFromBearing(24)).toBe('NNE'));
 });
 
 describe('getBearingToTarget', () => {
@@ -33,6 +34,10 @@ describe('getBearingToTarget', () => {
     const b = getBearingToTarget(40.7128, -74.006, 'madinah');
     expect(b).toBeGreaterThanOrEqual(0);
     expect(b).toBeLessThan(360);
+  });
+  it('accepts madina alias and returns same bearing as madinah', () => {
+    const lat = 40.7128, lon = -74.006;
+    expect(getBearingToTarget(lat, lon, 'madina')).toBe(getBearingToTarget(lat, lon, 'madinah'));
   });
 });
 

@@ -6,6 +6,11 @@
 export const TARGET_KEYS = ['kaaba', 'madinah', 'karbala', 'najaf'] as const;
 export type TargetKey = (typeof TARGET_KEYS)[number];
 
+/** App-friendly alias: e.g. 'madina' → 'madinah'. Use normalizeTargetKey() when looking up SITES. */
+export const TARGET_KEY_ALIASES: Record<string, TargetKey> = {
+  madina: 'madinah',
+};
+
 export interface SiteCoordinates {
   lat: number;
   lon: number;
@@ -37,3 +42,11 @@ export const SITES: Record<TargetKey, SiteCoordinates> = {
 };
 
 export const DEFAULT_TARGET: TargetKey = 'kaaba';
+
+/** Normalize app target keys to package keys (e.g. 'madina' → 'madinah'). Unknown keys fall back to DEFAULT_TARGET. */
+export function normalizeTargetKey(key: string): TargetKey {
+  const alias = TARGET_KEY_ALIASES[key];
+  if (alias) return alias;
+  if (TARGET_KEYS.includes(key as TargetKey)) return key as TargetKey;
+  return DEFAULT_TARGET;
+}

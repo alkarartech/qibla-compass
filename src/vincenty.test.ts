@@ -52,6 +52,11 @@ describe('getBearing', () => {
     expect(bearing).toBeGreaterThan(292);
     expect(bearing).toBeLessThan(302);
   });
+  it('returns bearing to Kaaba from Los Angeles (~22–30° NE, forward azimuth)', () => {
+    const bearing = getBearing(34.05, -118.25, SITES.kaaba.lat, SITES.kaaba.lon);
+    expect(bearing).toBeGreaterThanOrEqual(22);
+    expect(bearing).toBeLessThanOrEqual(30);
+  });
   it('falls back to great-circle for antipodal', () => {
     const b = getBearing(0, 0, 0, 180);
     expect(b).toBeGreaterThanOrEqual(0);

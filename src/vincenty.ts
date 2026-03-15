@@ -1,6 +1,7 @@
 /**
  * Vincenty inverse formula (WGS84) for geodesic forward azimuth (bearing).
- * Returns bearing in degrees 0–360 from true North, clockwise.
+ * Bearing is the forward azimuth from point 1 (fromLat, fromLon) to point 2 (toLat, toLon):
+ * 0° = North, 90° = East, 180° = South, 270° = West (clockwise from North).
  * Falls back to spherical great-circle bearing when Vincenty does not converge.
  */
 

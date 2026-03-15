@@ -32,5 +32,5 @@ export {
 } from './declination.js';
 export type { GetDeclinationOptions } from './declination.js';
 
-// Constants
-export { SITES as HOLY_SITES } from './constants.js';
+// Constants and target key normalization
+export { SITES as HOLY_SITES, TARGET_KEY_ALIASES, normalizeTargetKey } from './constants.js';

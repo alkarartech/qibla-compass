@@ -11,6 +11,7 @@ import {
   DEFAULT_TARGET,
   SITES,
   TARGET_KEYS,
+  normalizeTargetKey,
 } from './constants.js';
 
 export type { SiteCoordinates };
@@ -28,15 +29,16 @@ export interface QiblaDirectionResult {
  *
  * @param lat - Latitude in decimal degrees (WGS84)
  * @param lon - Longitude in decimal degrees (WGS84)
- * @param targetKey - Optional target; defaults to 'kaaba'
+ * @param targetKey - Optional target; defaults to 'kaaba'. Accepts 'madina' as alias for 'madinah'.
  * @returns { bearing, cardinal }
  */
 export function getQiblaDirection(
   lat: number,
   lon: number,
-  targetKey: TargetKey = DEFAULT_TARGET
+  targetKey: TargetKey | string = DEFAULT_TARGET
 ): QiblaDirectionResult {
-  const target = SITES[targetKey];
+  const key = normalizeTargetKey(String(targetKey));
+  const target = SITES[key];
   const bearing = getBearing(lat, lon, target.lat, target.lon);
   const cardinal = getCardinalFromBearing(bearing);
   return { bearing, cardinal };
@@ -44,13 +46,15 @@ export function getQiblaDirection(
 
 /**
  * Returns only the true bearing (degrees 0–360 from North, clockwise) to the given target.
+ * Accepts 'madina' as alias for 'madinah'.
  */
 export function getBearingToTarget(
   lat: number,
   lon: number,
-  targetKey: TargetKey = DEFAULT_TARGET
+  targetKey: TargetKey | string = DEFAULT_TARGET
 ): number {
-  const target = SITES[targetKey];
+  const key = normalizeTargetKey(String(targetKey));
+  const target = SITES[key];
   return getBearing(lat, lon, target.lat, target.lon);
 }
 

@@ -54,7 +54,27 @@ describe('getCachedDeclination', () => {
   });
 });
 
+describe('declination cache by location', () => {
+  beforeEach(() => clearDeclinationCache());
+
+  it('returns different values for different (lat, lon) when fetched', async () => {
+    const fetchMock = async (url: string) => {
+      const east = url.includes('lon1=10') ? 5 : -3;
+      return new Response(JSON.stringify({ declination: east }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    };
+    const d1 = await getMagneticDeclination(40, 10, { fetch: fetchMock });
+    const d2 = await getMagneticDeclination(40, -74, { fetch: fetchMock });
+    expect(d1).toBe(5);
+    expect(d2).toBe(-3);
+  });
+});
+
 describe('clearDeclinationCache', () => {
+  beforeEach(() => clearDeclinationCache());
+
   it('clears cache', async () => {
     const fetchMock = async () =>
       new Response(JSON.stringify({ declination: 5 }), {

@@ -4,12 +4,12 @@
  */
 
 import { useMemo } from 'react';
-import type { TargetKey } from './constants.js';
 import { getQiblaDirection } from './direction.js';
 import type { QiblaDirectionResult } from './direction.js';
 
 export interface UseQiblaDirectionOptions {
-  targetKey?: TargetKey;
+  /** Target key: 'kaaba' | 'madinah' | 'karbala' | 'najaf', or alias 'madina' for Madinah. */
+  targetKey?: string;
 }
 
 /**

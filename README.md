@@ -81,10 +81,10 @@ const magneticQibla = trueQibla - declination;
   Returns `{ bearing, cardinal }`.  
   `bearing`: 0–360 from true North, clockwise.  
   `cardinal`: e.g. `"NE"`, `"SSW"`.  
-  `targetKey` defaults to `'kaaba'`.
+  `targetKey` defaults to `'kaaba'`. Use `'madina'` for Madinah (alias for `'madinah'`).
 
 - **`getBearingToTarget(lat, lon, targetKey?)`**  
-  Returns only the true bearing in degrees (0–360).
+  Returns only the true bearing in degrees (0–360). Accepts `'madina'` as alias for `'madinah'`.
 
 - **`getCardinalFromBearing(degrees)`**  
   Returns cardinal/intercardinal string for any bearing (0–360).
@@ -149,6 +149,15 @@ function Compass({ lat, lon }) {
 - **Node / any JS env:** Use the main entry point; call `getQiblaDirection`, `getMagneticDeclination`, etc. Use a polyfill for `fetch` in Node if needed (e.g. `node-fetch` or Node 18+ built-in).
 - **React (web):** Same; use `useQiblaDirection` from `qibla-compass/react` if you want a hook.
 - **React Native / Expo:** Use the same API. For declination, ensure `fetch` is available or pass a custom `fetch` in options. No React Native–specific code is required in the core.
+
+---
+
+## Integration (compass apps)
+
+- **Coordinates:** All lat/lon are in **decimal degrees (WGS84)**. Do not pass radians or DMS.
+- **Target keys:** Package uses `'kaaba'`, `'madinah'`, `'karbala'`, `'najaf'`. If your app uses `'madina'` for Madinah, pass `'madina'` — it is accepted as an alias and normalized to `'madinah'`. Use `TARGET_KEY_ALIASES` or `normalizeTargetKey()` for custom mapping.
+- **Compass heading:** Device compass gives **magnetic** heading. Use **true heading = magnetic heading + declination** (declination East is positive). Then compare true heading to `getQiblaDirection(lat, lon).bearing` for the needle angle, or use **magnetic Qibla = true Qibla − declination** and compare to the raw magnetic heading.
+- **Convention:** All bearings are **0° = North, 90° = East**, clockwise. Use the same convention for the compass needle (e.g. 0° at top, clockwise).
 
 ---
 
