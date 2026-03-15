@@ -1,6 +1,6 @@
 {
   "name": "qibla-compass",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Accurate Qibla bearing and compass utilities for JavaScript/TypeScript (React Native, Expo, web)",
   "type": "module",
   "main": "./dist/index.js",
@@ -51,7 +51,9 @@
     "react": ">=17.0.0"
   },
   "peerDependenciesMeta": {
-    "react": { "optional": true }
+    "react": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
